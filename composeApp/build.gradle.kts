@@ -1,10 +1,10 @@
 import org.jetbrains.compose.ExperimentalComposeLibrary
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
+//    alias(libs.plugins.buildKonfig)
 }
 
 kotlin {
@@ -28,7 +28,7 @@ kotlin {
     }
     
     sourceSets {
-        
+
         androidMain.dependencies {
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
@@ -40,6 +40,15 @@ kotlin {
             implementation(compose.ui)
             @OptIn(ExperimentalComposeLibrary::class)
             implementation(compose.components.resources)
+
+            implementation(projects.apis.movie)
+            implementation(projects.libraries.core)
+            implementation(projects.libraries.component)
+
+            implementation(projects.features.home)
+            implementation(projects.features.favorites)
+
+            implementation(libs.precompose)
         }
     }
 }
@@ -78,3 +87,11 @@ android {
     }
 }
 
+//buildkonfig {
+//    packageName = "abika.sinau.movieapp"
+//
+//    // default config is required
+//    defaultConfigs {
+//        buildConfigField(FieldSpec.Type.STRING, "BASE_URL", "https://marketfake.fly.dev/")
+//    }
+//}
