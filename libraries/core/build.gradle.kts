@@ -1,8 +1,12 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.realm)
+    alias(libs.plugins.buildKonfig)
 }
 
 kotlin {
@@ -44,6 +48,7 @@ kotlin {
             implementation(compose.ui)
             @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
             implementation(compose.components.resources)
+            api(libs.kermit.logging)
         }
 
         androidMain.dependencies {
@@ -66,5 +71,19 @@ android {
     compileSdk = 34
     defaultConfig {
         minSdk = 24
+    }
+}
+
+buildkonfig {
+    packageName = "abika.sinau.movieapp"
+
+    // default config is required
+    defaultConfigs {
+        buildConfigField(STRING, "BASE_URL", "https://api.themoviedb.org/3/")
+        buildConfigField(
+            STRING,
+            "API_KEY",
+            gradleLocalProperties(rootDir).getProperty("api_key") ?: ""
+        )
     }
 }

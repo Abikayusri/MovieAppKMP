@@ -4,18 +4,17 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
-//    alias(libs.plugins.buildKonfig)
 }
 
 kotlin {
     androidTarget {
         compilations.all {
             kotlinOptions {
-                jvmTarget = "1.8"
+                jvmTarget = "17"
             }
         }
     }
-    
+
     listOf(
         iosX64(),
         iosArm64(),
@@ -24,9 +23,10 @@ kotlin {
         iosTarget.binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
+//            binaryOption("bundleId", "abika.sinau.movieapp.ComposeApp")
         }
     }
-    
+
     sourceSets {
 
         androidMain.dependencies {
@@ -49,6 +49,10 @@ kotlin {
             implementation(projects.features.favorites)
 
             implementation(libs.precompose)
+//            implementation(libs.timber)
+//            implementation(libs.napier)
+//            implementation(libs.kotlin.logging)
+//            implementation(libs.kermit.logging)
         }
     }
 }
@@ -79,19 +83,10 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     dependencies {
         debugImplementation(libs.compose.ui.tooling)
     }
 }
-
-//buildkonfig {
-//    packageName = "abika.sinau.movieapp"
-//
-//    // default config is required
-//    defaultConfigs {
-//        buildConfigField(FieldSpec.Type.STRING, "BASE_URL", "https://marketfake.fly.dev/")
-//    }
-//}
